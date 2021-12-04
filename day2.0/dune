@@ -1,0 +1,3 @@
+(executable
+ (name day2p1)
+ (libraries core util))
