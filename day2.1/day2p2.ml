@@ -1,5 +1,5 @@
 type position =
-  { x : int; y : int}
+  { x : int; y : int; aim : int}
 
 type command =
   | Forward of int
@@ -24,12 +24,12 @@ let read_command () =
 
 let update_position current command =
   match command with
-  | Forward(n) -> { x = current.x + n; y = current.y }
-  | Down(n) -> { x = current.x; y = current.y + n}
-  | Up(n) -> { x = current.x; y = current.y - n}
+  | Forward(n) -> { x = current.x + (current.aim * n); y = current.y + n; aim = current.aim }
+  | Down(n) -> { x = current.x; y = current.y; aim = current.aim + n}
+  | Up(n) -> { x = current.x; y = current.y; aim = current.aim - n}
   | Unknown -> current
 
 let () =
   let commands = (Util.Io.map_stdin ~f:command_of_string) in
-  let final_position = List.fold_left update_position { x=0; y=0 } commands in
+  let final_position = List.fold_left update_position { x=0; y=0; aim=0 } commands in
   Printf.printf "%d\n" (final_position.x * final_position.y)

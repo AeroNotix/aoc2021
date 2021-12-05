@@ -11,4 +11,4 @@ let rec compare_windows round previous numbers increases =
   | _ -> increases
 
 let () =
-  Printf.printf "%d\n" (compare_windows 0 0 (Util.Io.apply_f_to_lines ~f:(fun s -> int_of_string s)) (0 -1))
+  Printf.printf "%d\n" (compare_windows 0 0 (Util.Io.map_stdin ~f:(fun s -> int_of_string s)) (0 -1))
