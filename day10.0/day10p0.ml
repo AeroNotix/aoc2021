@@ -13,7 +13,7 @@ let score_map = [
 let opening = [ '(' ; '{' ; '[' ; '<' ]
 let closing = [ ')' ; '}' ; ']' ; '>' ]
 
-let bracking_mappings = (List.append
+let bracket_mappings = (List.append
                            (List.combine opening closing)
                            (List.combine closing opening)) |> charmap_of_list
 
@@ -22,7 +22,7 @@ let rec check_syntax unclosed remainder =
   | [] -> 0
   | h::t ->
     if List.mem h closing then
-      if CharMap.find h bracking_mappings = List.hd unclosed
+      if CharMap.find h bracket_mappings = List.hd unclosed
       then check_syntax (List.tl unclosed) t
       else CharMap.find h score_map
     else
