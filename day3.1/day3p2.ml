@@ -1,5 +1,3 @@
-let identity x = x
-
 type column_totals = {
     zero : int;
     one  : int;
@@ -64,9 +62,12 @@ let determine_reading comparitor counts readings =
     | [] -> raise Invalid_input in
   aux counts readings 0
 
+let int_of_binary_string s =
+  int_of_string ("0b" ^ s)
+
 let () =
-  let readings = Util.Io.map_stdin ~f:identity in
+  let readings = Util.Io.map_stdin ~f:Util.Fn.identity in
   let counts = List.fold_left count CountMap.empty readings in
   let o2_reading = determine_reading most_common counts readings in
   let co2_reading = determine_reading least_common counts readings in
-  Printf.printf "%d\n" ((int_of_string ("0b" ^ o2_reading)) * (int_of_string ("0b" ^ co2_reading)))
+  Printf.printf "%d\n" ((int_of_binary_string o2_reading) * (int_of_binary_string co2_reading))
